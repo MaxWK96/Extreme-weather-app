@@ -82,14 +82,37 @@ const WeatherExtremesTracker = () => {
   const [compareCity, setCompareCity] = useState(null);
   const [animateIn, setAnimateIn] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-  const [submissionCount, setSubmissionCount] = useState(0);
-  const [communitySubmissions, setCommunitySubmissions] = useState([]);
+const [submissionCount, setSubmissionCount] = useState(0);
+const [communitySubmissions, setCommunitySubmissions] = useState([]);
 
-  useEffect(() => {
-    setAnimateIn(true);
+  // Fetch function
+  const fetchWeatherData = useCallback(async () => {
+    try {
+      const res = await fetch('/api/extremes');  // No headers needed
+      if (!res.ok) throw new Error('Failed to fetch weather data');
+      const data = await res.json();
+      setExtremes(data.extremes);
+      setAllCities(data.allLocations || []);
+      setLoading(false);
+      setUsingRealData(true);
+      if (data.extremes) {
+        updateHistoricalRecords(data.extremes);
+        generateAlerts(data.extremes);
+      }
+    } catch (err) {
+      console.error('Error fetching weather:', err);
+    }
   }, []);
 
-  // (removed duplicate fetchWeatherData declaration)
+  // useEffect to handle animation and periodic fetch
+  useEffect(() => {
+    setAnimateIn(true); // animation
+
+    fetchWeatherData(); // fetch once on mount
+
+    const interval = setInterval(fetchWeatherData, 30 * 60 * 1000); // every 30 min
+    return () => clearInterval(interval); // cleanup
+  }, [fetchWeatherData]);
 
   const generateMockCityData = (city) => {
     const temp = Math.random() * 70 - 30;
@@ -107,6 +130,8 @@ const WeatherExtremesTracker = () => {
       pressure: 980 + Math.random() * 50,
     };
   };
+
+  // ...rest of your component
 
   const processWeatherData = (weatherData, isReal) => {
     const hottest = weatherData.reduce((max, city) => city.temp > max.temp ? city : max);
@@ -197,21 +222,10 @@ const WeatherExtremesTracker = () => {
 
   // import { useEffect, useCallback } from 'react'; // <-- removed, already imported at top
 
-// Make sure fetchWeatherData is wrapped in useCallback if it's defined inside your component:
-const fetchWeatherData = useCallback(() => {
-  // your fetch logic here
-}, []);
+// (removed duplicate import: import { useState, useEffect, useCallback } from 'react';)
 
-useEffect(() => {
-  // Initial fetch
-  fetchWeatherData();
+// Removed duplicate default export and Home component to resolve export error.
 
-  // Fetch every 30 minutes
-  const interval = setInterval(fetchWeatherData, 30 * 60 * 1000);
-
-  // Cleanup interval on unmount
-  return () => clearInterval(interval);
-}, [fetchWeatherData]); // ✅ include fetchWeatherData in deps
 
 useEffect(() => {
   if (searchQuery.length > 0) {

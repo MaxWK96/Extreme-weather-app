@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
+  // No authentication needed - this is public data
   try {
     const filePath = path.join(process.cwd(), 'public/data/extremes.json');
     

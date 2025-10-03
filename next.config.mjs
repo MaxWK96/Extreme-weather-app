@@ -1,7 +1,7 @@
 const nextConfig = {
-  experimental: {
-    turbo: false,
-  },
+  // experimental: {
+  //   turbo: false,
+  // },
 };
 
 export default nextConfig;
