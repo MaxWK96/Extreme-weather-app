@@ -33,10 +33,22 @@ async function fetchWeather(city) {
     const response = await fetch(url);
     const data = await response.json();
     
+    // Log the response to debug
+    if (!response.ok) {
+      console.error(`API Error for ${city.name}:`, data);
+      return null;
+    }
+    
+    // Check if data structure is correct
+    if (!data.main || !data.wind) {
+      console.error(`Invalid data structure for ${city.name}:`, data);
+      return null;
+    }
+    
     return {
       ...city,
       temp: data.main.temp,
-      tempYesterday: data.main.temp - (Math.random() * 5 - 2.5), // Estimate
+      tempYesterday: data.main.temp - (Math.random() * 5 - 2.5),
       tempSwing: Math.abs(data.main.temp_max - data.main.temp_min),
       windSpeed: data.wind.speed,
       humidity: data.main.humidity,
@@ -52,12 +64,19 @@ async function fetchWeather(city) {
 
 async function updateWeatherData() {
   console.log('Fetching weather data for all cities...');
+  console.log('API Key present:', !!API_KEY);
+  
+  if (!API_KEY) {
+    throw new Error('WEATHER_API_KEY environment variable is not set');
+  }
   
   const weatherData = await Promise.all(
     CITIES.map(city => fetchWeather(city))
   );
   
   const validData = weatherData.filter(d => d !== null);
+  
+  console.log(`Successfully fetched ${validData.length}/${CITIES.length} cities`);
   
   if (validData.length === 0) {
     throw new Error('No valid weather data fetched');
