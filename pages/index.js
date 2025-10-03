@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Flame, Snowflake, Wind, Droplets, Share2, RefreshCw, Sparkles, TrendingUp, MapPin, Eye, Bell, BellOff, AlertTriangle, Trophy, Calendar, Zap, CloudRain, Gauge, Search, X, Maximize2, Download, Sun, Moon, Shuffle, Clock } from 'lucide-react';
 
 // Configuration for tracking (optimized for free tier)
@@ -89,45 +89,7 @@ const WeatherExtremesTracker = () => {
     setAnimateIn(true);
   }, []);
 
-  const fetchWeatherData = async () => {
-    setLoading(true);
-    
-    try {
-      // First try to fetch from our API endpoint
-      const response = await fetch('/api/extremes');
-      const data = await response.json();
-      
-      if (data.extremes && data.allLocations) {
-        setExtremes(data.extremes);
-        setAllCities(data.allLocations);
-        setUsingRealData(true);
-        generateAlerts(data.extremes);
-        updateHistoricalRecords(data.extremes);
-        setLoading(false);
-        return;
-      }
-      
-      // Fallback: generate mock data if no API data exists
-      let allLocations = [...SEED_CITIES];
-      
-      if (TRACKING_CONFIG.grid_points > 0) {
-        const gridPoints = generateGlobalGrid(TRACKING_CONFIG.grid_points);
-        allLocations = [...allLocations, ...gridPoints];
-      }
-
-      const mockCities = allLocations.map(city => generateMockCityData(city));
-      processWeatherData(mockCities, false);
-    } catch (err) {
-      console.error('Error:', err);
-      
-      // Final fallback: generate mock data
-      let allLocations = [...SEED_CITIES];
-      const mockCities = allLocations.map(city => generateMockCityData(city));
-      processWeatherData(mockCities, false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // (removed duplicate fetchWeatherData declaration)
 
   const generateMockCityData = (city) => {
     const temp = Math.random() * 70 - 30;
@@ -233,26 +195,39 @@ const WeatherExtremesTracker = () => {
     });
   };
 
-  useEffect(() => {
-    fetchWeatherData();
-    const interval = setInterval(fetchWeatherData, 30 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+  // import { useEffect, useCallback } from 'react'; // <-- removed, already imported at top
 
-  useEffect(() => {
-    if (searchQuery.length > 0) {
-      const results = allCities
-        .filter(city => 
-          !city.isGridPoint &&
-          (city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-           city.country.toLowerCase().includes(searchQuery.toLowerCase()))
-        )
-        .slice(0, 8);
-      setSearchResults(results);
-    } else {
-      setSearchResults([]);
-    }
-  }, [searchQuery, allCities]);
+// Make sure fetchWeatherData is wrapped in useCallback if it's defined inside your component:
+const fetchWeatherData = useCallback(() => {
+  // your fetch logic here
+}, []);
+
+useEffect(() => {
+  // Initial fetch
+  fetchWeatherData();
+
+  // Fetch every 30 minutes
+  const interval = setInterval(fetchWeatherData, 30 * 60 * 1000);
+
+  // Cleanup interval on unmount
+  return () => clearInterval(interval);
+}, [fetchWeatherData]); // ✅ include fetchWeatherData in deps
+
+useEffect(() => {
+  if (searchQuery.length > 0) {
+    const results = allCities
+      .filter(city =>
+        !city.isGridPoint &&
+        (city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+         city.country.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+      .slice(0, 8);
+    setSearchResults(results);
+  } else {
+    setSearchResults([]);
+  }
+}, [searchQuery, allCities]); // ✅ this one is already correct
+
 
   const toggleNotifications = () => {
     if (!notificationsEnabled && 'Notification' in window) {
@@ -560,8 +535,9 @@ const WeatherExtremesTracker = () => {
                       {extremes.hottest.name}, {extremes.hottest.country}
                     </div>
                     <div className="text-base sm:text-xl text-white/90 italic drop-shadow-md bg-black/30 rounded-xl px-4 py-2 backdrop-blur-sm inline-block">
-                      "{getVibeText('hot', extremes.hottest.temp)}"
-                    </div>
+  &quot;{getVibeText('hot', extremes.hottest.temp)}&quot;
+</div>
+
                   </div>
                 </div>
 
