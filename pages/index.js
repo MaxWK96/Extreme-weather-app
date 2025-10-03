@@ -30,16 +30,6 @@ const SEED_CITIES = [
   { name: 'Toronto', lat: 43.6532, lon: -79.3832, country: 'Canada' },
   { name: 'Reykjavik', lat: 64.1466, lon: -21.9426, country: 'Iceland' },
   { name: 'Yakutsk', lat: 62.0355, lon: 129.6755, country: 'Russia' },
-  { name: 'Kuwait City', lat: 29.3759, lon: 47.9774, country: 'Kuwait' },
-  { name: 'Death Valley', lat: 36.5323, lon: -116.9325, country: 'USA' },
-  { name: 'Dallol', lat: 14.2417, lon: 40.2833, country: 'Ethiopia' },
-  { name: 'Verkhoyansk', lat: 67.5447, lon: 133.3850, country: 'Russia' },
-  { name: 'Oymyakon', lat: 63.4608, lon: 142.7858, country: 'Russia' },
-  { name: 'Mount Washington', lat: 44.2706, lon: -71.3033, country: 'USA' },
-  { name: 'Cherrapunji', lat: 25.2677, lon: 91.7322, country: 'India' },
-  { name: 'Arica', lat: -18.4783, lon: -70.3126, country: 'Chile' },
-  { name: 'Atacama Desert', lat: -23.8501, lon: -69.2483, country: 'Chile' },
-  { name: 'McMurdo Station', lat: -77.8419, lon: 166.6863, country: 'Antarctica' },
 ];
 
 const generateGlobalGrid = (numPoints) => {
@@ -84,6 +74,7 @@ const WeatherExtremesTracker = () => {
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 const [submissionCount, setSubmissionCount] = useState(0);
 const [communitySubmissions, setCommunitySubmissions] = useState([]);
+
 
   // Fetch function
   const fetchWeatherData = useCallback(async () => {
