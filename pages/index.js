@@ -516,7 +516,7 @@ useEffect(() => {
                           <Sparkles className="w-5 h-5 text-yellow-200 absolute -top-1 -right-1 animate-pulse drop-shadow-lg" />
                         </div>
                         <div>
-                          <div className="text-yellow-200 text-xs font-bold uppercase tracking-widest mb-1 drop-shadow-md">🏆 today's winner</div>
+                          <div className="text-yellow-200 text-xs font-bold uppercase tracking-widest mb-1 drop-shadow-md">🏆 today&apos;s winner</div>
                           <h2 className="text-xl sm:text-2xl font-black text-white drop-shadow-2xl">HOTTEST ON EARTH</h2>
                         </div>
                       </div>
