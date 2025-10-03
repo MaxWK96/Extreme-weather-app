@@ -2,14 +2,30 @@ name: Update Weather Data
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes
-  workflow_dispatch:  # Manual trigger
+    - cron: '0 */6 * * *'  # Every 6 hours (free tier friendly)
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Trigger weather update
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Fetch weather data
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+        run: node scripts/update-weather.js
+        
+      - name: Commit and push if changed
         run: |
-          curl -X POST https://${{ secrets.VERCEL_URL }}/api/update-weather \
-            -H "x-cron-secret: ${{ secrets.CRON_SECRET }}"
+          git config --global user.name 'Weather Bot'
+          git config --global user.email 'bot@weather.com'
+          git add public/data/extremes.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update weather data [skip ci]" && git push)
