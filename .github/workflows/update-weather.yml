@@ -1,0 +1,15 @@
+name: Update Weather Data
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger weather update
+        run: |
+          curl -X POST https://${{ secrets.VERCEL_URL }}/api/update-weather \
+            -H "x-cron-secret: ${{ secrets.CRON_SECRET }}"
