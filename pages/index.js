@@ -661,7 +661,7 @@ useEffect(() => {
                     </h2>
                     <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
                       We track the <span className="font-bold text-purple-500">20 most extreme places</span> on Earth.
-                      <br />But we know there's more extreme weather out there.
+                      <br />But we know there&apos;s more extreme weather out there.
                     </p>
                     <div className="flex flex-wrap items-center justify-center gap-6 mb-6">
                       <div className="text-center">
@@ -892,7 +892,7 @@ useEffect(() => {
               </button>
 
               <p className={`text-xs text-center ${darkMode ? 'text-gray-500' : 'text-gray-600'}`}>
-                We'll verify your submission and add it if accurate!
+                We&apos;ll verify your submission and add it if accurate!
               </p>
             </div>
           </div>
@@ -1065,7 +1065,7 @@ const ExtremeCard = ({ extreme, type, icon: Icon, emoji, stat, unit, color, vibe
         <div className="text-sm text-white/80 drop-shadow-sm mb-3">{extreme.country}</div>
         {vibeType && (
           <div className="text-sm text-white/90 italic drop-shadow-md bg-black/20 rounded-lg px-3 py-2 backdrop-blur-sm">
-            "{getVibeText(vibeType, stat)}"
+            &quot;{getVibeText(vibeType, stat)}&quot;
           </div>
         )}
       </div>
@@ -1348,7 +1348,7 @@ const HistoryView = ({ records, darkMode }) => {
       <div className={`rounded-2xl p-8 border ${darkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           <Calendar className="w-6 h-6" />
-          This Month's Records
+          This Month&apos;s Records
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <MonthRecordCard 
@@ -1479,14 +1479,14 @@ const ExtremeModal = ({ extreme, onClose, onShare, getVibeText, darkMode }) => {
 
           <div className={`rounded-2xl p-6 ${darkMode ? 'bg-gray-800/50' : 'bg-gray-100'}`}>
             <div className={`text-lg italic mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-              "{getVibeText(
+              &quot;{getVibeText(
                 extreme.type === 'coldest' ? 'cold' : 
                 extreme.type === 'windiest' ? 'wind' : 
                 extreme.type === 'mostHumid' ? 'humidity' :
                 extreme.type === 'biggestSwing' ? 'swing' :
                 extreme.type === 'mostRain' ? 'rain' : null,
                 extreme.stat
-              )}"
+              )}&quot;
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className={`rounded-xl p-3 ${darkMode ? 'bg-gray-900/50' : 'bg-white'}`}>
