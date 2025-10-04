@@ -93,7 +93,7 @@ const [communitySubmissions, setCommunitySubmissions] = useState([]);
     } catch (err) {
       console.error('Error fetching weather:', err);
     }
-  }, []);
+  }, [generateAlerts, updateHistoricalRecords]);
 
   // useEffect to handle animation and periodic fetch
   useEffect(() => {
@@ -811,7 +811,7 @@ useEffect(() => {
         <div className="text-4xl mb-3">🌡️</div>
         <h2 className="text-2xl font-black mb-2">Submit Your Location</h2>
         <p className={`text-sm mb-6 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-          Experiencing extreme weather? Share it with us and we'll verify it!
+          Experiencing extreme weather? Share it with us and we&apos;ll verify it!
         </p>
 
         <button
@@ -826,7 +826,7 @@ useEffect(() => {
         </button>
 
         <p className={`text-xs text-center mt-4 ${darkMode ? 'text-gray-500' : 'text-gray-600'}`}>
-          Opens in a new tab. We'll review and add verified submissions!
+          Opens in a new tab. We&apos;ll review and add verified submissions!
         </p>
       </div>
     </div>
