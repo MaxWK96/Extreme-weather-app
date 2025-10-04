@@ -787,122 +787,53 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Submission Modal */}
-      {showSubmitModal && (
-        <div 
-          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto"
-          onClick={() => setShowSubmitModal(false)}
+{showSubmitModal && (
+  <div 
+    className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto"
+    onClick={() => setShowSubmitModal(false)}
+  >
+    <div 
+      className={`rounded-3xl p-8 max-w-lg w-full border-2 relative my-8 ${
+        darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-300'
+      }`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        onClick={() => setShowSubmitModal(false)}
+        className={`absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-xl transition-colors ${
+          darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
+        }`}
+      >
+        <X className="w-6 h-6" />
+      </button>
+
+      <div className="text-center">
+        <div className="text-4xl mb-3">🌡️</div>
+        <h2 className="text-2xl font-black mb-2">Submit Your Location</h2>
+        <p className={`text-sm mb-6 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          Experiencing extreme weather? Share it with us and we'll verify it!
+        </p>
+
+        <button
+          onClick={() => {
+            window.open('https://docs.google.com/forms/d/e/1FAIpQLSelvNa1zmuEe5FpqD2LWc8dW_QcDUa10eZHMG-TggHBMjfEQQ/viewform?usp=dialog', '_blank');
+            setSubmissionCount(prev => prev + 1);
+            setShowSubmitModal(false);
+          }}
+          className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl font-bold text-lg transition-all hover:scale-105"
         >
-          <div 
-            className={`rounded-3xl p-8 max-w-lg w-full border-2 relative my-8 max-h-[90vh] overflow-y-auto ${
-              darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-300'
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowSubmitModal(false)}
-              className={`absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-xl transition-colors ${
-                darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
-              }`}
-            >
-              <X className="w-6 h-6" />
-            </button>
+          Open Submission Form
+        </button>
 
-            <div className="text-center mb-6">
-              <div className="text-4xl mb-3">🌡️</div>
-              <h2 className="text-2xl font-black mb-2">Submit Your Location</h2>
-              <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                Help us track extreme weather worldwide!
-              </p>
-            </div>
+        <p className={`text-xs text-center mt-4 ${darkMode ? 'text-gray-500' : 'text-gray-600'}`}>
+          Opens in a new tab. We'll review and add verified submissions!
+        </p>
+      </div>
+    </div>
+  </div>
+)}
 
-            <div className="space-y-4">
-              <div>
-                <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  City Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Phoenix"
-                  className={`w-full px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    darkMode ? 'bg-gray-800 text-white placeholder-gray-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'
-                  }`}
-                />
-              </div>
 
-              <div>
-                <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Country *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. USA"
-                  className={`w-full px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    darkMode ? 'bg-gray-800 text-white placeholder-gray-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'
-                  }`}
-                />
-              </div>
-
-              <div>
-                <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Current Temperature (°C) *
-                </label>
-                <input
-                  type="number"
-                  required
-                  placeholder="e.g. 45"
-                  className={`w-full px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    darkMode ? 'bg-gray-800 text-white placeholder-gray-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'
-                  }`}
-                />
-              </div>
-
-              <div>
-                <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Why is it extreme?
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="e.g. Hottest day of the year, unusual cold snap..."
-                  className={`w-full px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    darkMode ? 'bg-gray-800 text-white placeholder-gray-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'
-                  }`}
-                />
-              </div>
-
-              <div>
-                <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Your Name/Handle (optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. weatherfan123"
-                  className={`w-full px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    darkMode ? 'bg-gray-800 text-white placeholder-gray-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'
-                  }`}
-                />
-              </div>
-
-              <button
-  onClick={() => {
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSelvNa1zmuEe5FpqD2LWc8dW_QcDUa10eZHMG-TggHBMjfEQQ/viewform?usp=dialog', '_blank');
-    setSubmissionCount(prev => prev + 1);
-    setShowSubmitModal(false);
-  }}
-  className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl font-bold text-lg transition-all hover:scale-105"
->
-  Submit Report
-</button>
-
-              <p className={`text-xs text-center ${darkMode ? 'text-gray-500' : 'text-gray-600'}`}>
-                We&apos;ll verify your submission and add it if accurate!
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Extreme Modal */}
       {selectedExtreme && (
