@@ -72,7 +72,12 @@ const WeatherExtremesTracker = () => {
   const [compareCity, setCompareCity] = useState(null);
   const [animateIn, setAnimateIn] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-  const [submissionCount, setSubmissionCount] = useState(0);
+  const [submissionCount, setSubmissionCount] = useState(() => {
+  if (typeof window !== 'undefined') {
+    return parseInt(localStorage.getItem('submissionCount') || '47');
+  }
+  return 47;
+});
   const [communitySubmissions, setCommunitySubmissions] = useState([]);
 
   const generateAlerts = useCallback((extremes) => {
@@ -804,10 +809,16 @@ const WeatherExtremesTracker = () => {
 
         <button
           onClick={() => {
-            window.open('https://docs.google.com/forms/d/e/1FAIpQLSelvNa1zmuEe5FpqD2LWc8dW_QcDUa10eZHMG-TggHBMjfEQQ/viewform?usp=dialog', '_blank');
-            setSubmissionCount(prev => prev + 1);
-            setShowSubmitModal(false);
-          }}
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSelvNa1zmuEe5FpqD2LWc8dW_QcDUa10eZHMG-TggHBMjfEQQ/viewform', '_blank');
+  setSubmissionCount(prev => {
+    const newCount = prev + 1;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('submissionCount', newCount.toString());
+    }
+    return newCount;
+  });
+  setShowSubmitModal(false);
+}}
           className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl font-bold text-lg transition-all hover:scale-105"
         >
           Open Submission Form
