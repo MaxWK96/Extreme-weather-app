@@ -303,7 +303,7 @@ useEffect(() => {
   };
 
   const shareExtreme = (extreme, type, stat, unit) => {
-    const emoji = type === 'hottest' ? '🔥' : type === 'coldest' ? '❄️' : type === 'windiest' ? '💨' : type === 'mostHumid' ? '💧' : type === 'biggestSwing' ? '⚡' : '🌧️';
+    const emoji = type === 'hottest' ? '🔥' : type === 'coldest' ? '❄️' : type === 'windiest' ? '💨' : type === 'most humid' ? '💧' : type === 'biggest temperature swinging' ? '⚡' : '🌧️';
     const text = `${emoji} ${extreme.name} is the ${type} place on Earth right now: ${Math.round(stat)}${unit}\n\nCheck out global weather extremes →`;
     
     if (navigator.share) {
@@ -629,16 +629,16 @@ useEffect(() => {
                     darkMode={darkMode}
                   />
                   <ExtremeCard
-                    extreme={extremes.mostRain}
-                    type="most rain"
+                    extreme={extremes.rainiest}
+                    type="rainiest"
                     icon={CloudRain}
                     emoji="🌧️"
-                    stat={extremes.mostRain.rainfall24h}
+                    stat={extremes.rainiest.rainfall24h}
                     unit="mm"
                     color="from-blue-500 to-indigo-600"
                     vibeType="rain"
                     onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.mostRain, type: 'mostRain', stat: extremes.mostRain.rainfall24h, unit: 'mm' })}
+                    onClick={() => setSelectedExtreme({ ...extremes.rainiest, type: 'rainiest', stat: extremes.rainiest.rainfall24h, unit: 'mm' })}
                     darkMode={darkMode}
                   />
                   <ExtremeCard
@@ -951,95 +951,120 @@ const ExtremeCard = ({ extreme, type, icon: Icon, emoji, stat, unit, color, vibe
     return "";
   };
 
-  const getThemedStyle = () => {
-    if (type === 'coldest') {
-      return {
-        bg: 'bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-200',
-        overlay: 'bg-gradient-to-b from-transparent via-blue-900/30 to-blue-950/70',
-        glow: 'shadow-2xl shadow-blue-400/50',
-        accent: 'text-cyan-100',
-        particles: (
-          <>
-            <div className="absolute top-2 left-4 text-white/30 text-2xl animate-pulse">❄️</div>
-            <div className="absolute top-8 right-6 text-white/20 text-xl animate-pulse" style={{animationDelay: '0.3s'}}>❄️</div>
-            <div className="absolute bottom-12 left-8 text-white/25 text-lg animate-pulse" style={{animationDelay: '0.6s'}}>❄️</div>
-            <div className="absolute top-1/2 right-4 text-white/15 text-sm animate-pulse" style={{animationDelay: '0.9s'}}>❄️</div>
-          </>
-        )
-      };
-    } else if (type === 'windiest') {
-      return {
-        bg: 'bg-gradient-to-br from-teal-400 via-cyan-500 to-gray-400',
-        overlay: 'bg-gradient-to-b from-transparent via-teal-900/30 to-gray-900/70',
-        glow: 'shadow-2xl shadow-teal-400/50',
-        accent: 'text-teal-100',
-        particles: (
-          <>
-            <div className="absolute top-4 left-2 text-white/20 text-xl animate-bounce">💨</div>
-            <div className="absolute top-1/3 right-8 text-white/15 text-2xl animate-bounce" style={{animationDelay: '0.2s'}}>🌪️</div>
-            <div className="absolute bottom-1/4 left-12 text-white/20 text-lg animate-bounce" style={{animationDelay: '0.4s'}}>💨</div>
-          </>
-        )
-      };
-    } else if (type === 'most humid') {
-      return {
-        bg: 'bg-gradient-to-br from-indigo-400 via-blue-500 to-purple-400',
-        overlay: 'bg-gradient-to-b from-transparent via-indigo-900/40 to-purple-950/70',
-        glow: 'shadow-2xl shadow-indigo-400/50',
-        accent: 'text-indigo-100',
-        particles: (
-          <>
-            <div className="absolute top-6 right-4 text-white/25 text-3xl">💧</div>
-            <div className="absolute top-16 left-6 text-white/20 text-2xl" style={{animationDelay: '0.3s'}}>💧</div>
-            <div className="absolute bottom-16 right-8 text-white/25 text-xl" style={{animationDelay: '0.6s'}}>💧</div>
-            <div className="absolute top-1/2 left-1/4 text-white/15 text-lg" style={{animationDelay: '0.9s'}}>💧</div>
-          </>
-        )
-      };
-    } else if (type === 'biggest swing') {
-      return {
-        bg: 'bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500',
-        overlay: 'bg-gradient-to-b from-transparent via-yellow-900/30 to-red-950/70',
-        glow: 'shadow-2xl shadow-yellow-400/50',
-        accent: 'text-yellow-100',
-        particles: (
-          <>
-            <div className="absolute top-4 right-4 text-white/30 text-2xl animate-ping">⚡</div>
-            <div className="absolute bottom-8 left-6 text-white/25 text-xl animate-ping" style={{animationDelay: '0.5s'}}>⚡</div>
-            <div className="absolute top-1/2 right-8 text-white/20 text-lg animate-ping" style={{animationDelay: '1s'}}>⚡</div>
-          </>
-        )
-      };
-    } else if (type === 'most rain') {
-      return {
-        bg: 'bg-gradient-to-br from-blue-600 via-indigo-700 to-blue-900',
-        overlay: 'bg-gradient-to-b from-transparent via-blue-950/40 to-indigo-950/80',
-        glow: 'shadow-2xl shadow-blue-600/50',
-        accent: 'text-blue-100',
-        particles: (
-          <>
-            <div className="absolute top-2 left-1/4 text-white/30 text-xl">🌧️</div>
-            <div className="absolute top-8 right-1/4 text-white/25 text-lg" style={{animationDelay: '0.2s'}}>💧</div>
-            <div className="absolute top-16 left-1/3 text-white/20 text-sm" style={{animationDelay: '0.4s'}}>💧</div>
-            <div className="absolute bottom-20 right-1/3 text-white/25 text-lg" style={{animationDelay: '0.6s'}}>💧</div>
-          </>
-        )
-      };
-    } else {
-      return {
-        bg: 'bg-gradient-to-br from-gray-500 via-slate-600 to-gray-700',
-        overlay: 'bg-gradient-to-b from-transparent via-gray-900/30 to-slate-950/70',
-        glow: 'shadow-2xl shadow-gray-500/50',
-        accent: 'text-gray-100',
-        particles: (
-          <>
-            <div className="absolute top-4 right-4 text-white/20 text-2xl">📉</div>
-            <div className="absolute bottom-8 left-6 text-white/15 text-xl">🌀</div>
-          </>
-        )
-      };
-    }
-  };
+const getThemedStyle = () => {
+  if (type === 'coldest') {
+    return {
+      bg: 'bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-200',
+      overlay: 'bg-gradient-to-b from-transparent via-blue-900/30 to-blue-950/70',
+      glow: 'shadow-2xl shadow-blue-400/50',
+      accent: 'text-cyan-100',
+      particles: (
+        <>
+          <div className="absolute top-2 left-4 text-white/40 text-3xl animate-pulse">❄️</div>
+          <div className="absolute top-8 right-6 text-white/30 text-2xl animate-pulse" style={{animationDelay: '0.3s'}}>❄️</div>
+          <div className="absolute bottom-12 left-8 text-white/35 text-2xl animate-pulse" style={{animationDelay: '0.6s'}}>❄️</div>
+          <div className="absolute top-1/2 right-4 text-white/25 text-xl animate-pulse" style={{animationDelay: '0.9s'}}>❄️</div>
+          <div className="absolute bottom-20 right-12 text-white/30 text-lg animate-pulse" style={{animationDelay: '1.2s'}}>❄️</div>
+          <div className="absolute top-16 left-16 text-white/20 text-2xl animate-pulse" style={{animationDelay: '1.5s'}}>❄️</div>
+        </>
+      )
+    };
+  } else if (type === 'hottest') {
+    return {
+      bg: 'bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500',
+      overlay: 'bg-gradient-to-b from-transparent via-orange-900/20 to-red-950/60',
+      glow: 'shadow-2xl shadow-orange-400/60',
+      accent: 'text-yellow-100',
+      particles: (
+        <>
+          <div className="absolute top-4 right-4 text-white/40 text-4xl animate-pulse">☀️</div>
+          <div className="absolute top-12 left-8 text-white/30 text-3xl animate-pulse" style={{animationDelay: '0.4s'}}>☀️</div>
+          <div className="absolute bottom-16 right-12 text-white/35 text-2xl animate-pulse" style={{animationDelay: '0.8s'}}>🔥</div>
+          <div className="absolute top-1/2 left-6 text-white/25 text-2xl animate-pulse" style={{animationDelay: '1.2s'}}>🔥</div>
+          <div className="absolute bottom-8 left-1/3 text-white/30 text-xl animate-pulse" style={{animationDelay: '1.6s'}}>☀️</div>
+        </>
+      )
+    };
+  } else if (type === 'windiest') {
+    return {
+      bg: 'bg-gradient-to-br from-teal-400 via-cyan-500 to-gray-400',
+      overlay: 'bg-gradient-to-b from-transparent via-teal-900/30 to-gray-900/70',
+      glow: 'shadow-2xl shadow-teal-400/50',
+      accent: 'text-teal-100',
+      particles: (
+        <>
+          <div className="absolute top-4 left-2 text-white/35 text-3xl animate-bounce">💨</div>
+          <div className="absolute top-1/3 right-8 text-white/30 text-3xl animate-bounce" style={{animationDelay: '0.2s'}}>💨</div>
+          <div className="absolute bottom-1/4 left-12 text-white/35 text-2xl animate-bounce" style={{animationDelay: '0.4s'}}>💨</div>
+          <div className="absolute top-1/2 left-1/4 text-white/25 text-2xl animate-bounce" style={{animationDelay: '0.6s'}}>🌪️</div>
+          <div className="absolute bottom-12 right-8 text-white/30 text-xl animate-bounce" style={{animationDelay: '0.8s'}}>💨</div>
+        </>
+      )
+    };
+  } else if (type === 'most humid') {
+    return {
+      bg: 'bg-gradient-to-br from-indigo-400 via-blue-500 to-purple-400',
+      overlay: 'bg-gradient-to-b from-transparent via-indigo-900/40 to-purple-950/70',
+      glow: 'shadow-2xl shadow-indigo-400/50',
+      accent: 'text-indigo-100',
+      particles: (
+        <>
+          <div className="absolute top-6 right-4 text-white/35 text-4xl">💧</div>
+          <div className="absolute top-16 left-6 text-white/30 text-3xl" style={{animationDelay: '0.3s'}}>💧</div>
+          <div className="absolute bottom-16 right-8 text-white/35 text-2xl" style={{animationDelay: '0.6s'}}>💧</div>
+          <div className="absolute top-1/2 left-1/4 text-white/25 text-2xl" style={{animationDelay: '0.9s'}}>💧</div>
+          <div className="absolute bottom-8 left-12 text-white/30 text-xl" style={{animationDelay: '1.2s'}}>💧</div>
+          <div className="absolute top-20 right-16 text-white/20 text-lg" style={{animationDelay: '1.5s'}}>💧</div>
+        </>
+      )
+    };
+  } else if (type === 'biggest swing') {
+    return {
+      bg: 'bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500',
+      overlay: 'bg-gradient-to-b from-transparent via-yellow-900/30 to-red-950/70',
+      glow: 'shadow-2xl shadow-yellow-400/50',
+      accent: 'text-yellow-100',
+      particles: (
+        <>
+          <div className="absolute top-4 right-4 text-white/40 text-3xl animate-ping">⚡</div>
+          <div className="absolute bottom-8 left-6 text-white/35 text-2xl animate-ping" style={{animationDelay: '0.5s'}}>⚡</div>
+          <div className="absolute top-1/2 right-8 text-white/30 text-2xl animate-ping" style={{animationDelay: '1s'}}>⚡</div>
+          <div className="absolute bottom-16 right-1/3 text-white/25 text-xl animate-ping" style={{animationDelay: '1.5s'}}>⚡</div>
+        </>
+      )
+    };
+  } else if (type === 'most rain') {
+    return {
+      bg: 'bg-gradient-to-br from-blue-600 via-indigo-700 to-blue-900',
+      overlay: 'bg-gradient-to-b from-transparent via-blue-950/40 to-indigo-950/80',
+      glow: 'shadow-2xl shadow-blue-600/50',
+      accent: 'text-blue-100',
+      particles: (
+        <>
+          <div className="absolute top-2 left-1/4 text-white/35 text-2xl">🌧️</div>
+          <div className="absolute top-8 right-1/4 text-white/30 text-xl" style={{animationDelay: '0.2s'}}>💧</div>
+          <div className="absolute top-16 left-1/3 text-white/25 text-lg" style={{animationDelay: '0.4s'}}>💧</div>
+          <div className="absolute bottom-20 right-1/3 text-white/30 text-xl" style={{animationDelay: '0.6s'}}>💧</div>
+          <div className="absolute top-24 right-12 text-white/20 text-sm" style={{animationDelay: '0.8s'}}>💧</div>
+          <div className="absolute bottom-12 left-16 text-white/25 text-lg" style={{animationDelay: '1s'}}>💧</div>
+        </>
+      )
+    };
+  } else {
+    return {
+      bg: 'bg-gradient-to-br from-gray-500 via-slate-600 to-gray-700',
+      overlay: 'bg-gradient-to-b from-transparent via-gray-900/30 to-slate-950/70',
+      glow: 'shadow-2xl shadow-gray-500/50',
+      accent: 'text-gray-100',
+      particles: (
+        <>
+          <div className="absolute top-4 right-4 text-white/25 text-3xl">📉</div>
+          <div className="absolute bottom-8 left-6 text-white/20 text-2xl">🌀</div>
+        </>
+      )
+    };
+  }
+};
 
   const theme = getThemedStyle();
 
