@@ -72,75 +72,10 @@ const WeatherExtremesTracker = () => {
   const [compareCity, setCompareCity] = useState(null);
   const [animateIn, setAnimateIn] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-const [submissionCount, setSubmissionCount] = useState(0);
-const [communitySubmissions, setCommunitySubmissions] = useState([]);
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const [communitySubmissions, setCommunitySubmissions] = useState([]);
 
-
-  // Fetch function
-  const fetchWeatherData = useCallback(async () => {
-    try {
-      const res = await fetch('/api/extremes');  // No headers needed
-      if (!res.ok) throw new Error('Failed to fetch weather data');
-      const data = await res.json();
-      setExtremes(data.extremes);
-      setAllCities(data.allLocations || []);
-      setLoading(false);
-      setUsingRealData(true);
-      if (data.extremes) {
-        updateHistoricalRecords(data.extremes);
-        generateAlerts(data.extremes);
-      }
-    } catch (err) {
-      console.error('Error fetching weather:', err);
-    }
-  }, [generateAlerts, updateHistoricalRecords]);
-
-  // useEffect to handle animation and periodic fetch
-  useEffect(() => {
-    setAnimateIn(true); // animation
-
-    fetchWeatherData(); // fetch once on mount
-
-    const interval = setInterval(fetchWeatherData, 30 * 60 * 1000); // every 30 min
-    return () => clearInterval(interval); // cleanup
-  }, [fetchWeatherData]);
-
-  const generateMockCityData = (city) => {
-    const temp = Math.random() * 70 - 30;
-    const tempYesterday = temp + (Math.random() * 20 - 10);
-    
-    return {
-      ...city,
-      temp,
-      tempYesterday,
-      tempSwing: Math.abs(temp - tempYesterday),
-      windSpeed: Math.random() * 35,
-      humidity: 30 + Math.random() * 70,
-      feelsLike: temp + (Math.random() * 10 - 5),
-      rainfall24h: Math.random() * 100,
-      pressure: 980 + Math.random() * 50,
-    };
-  };
-
-  // ...rest of your component
-
-  const processWeatherData = (weatherData, isReal) => {
-    const hottest = weatherData.reduce((max, city) => city.temp > max.temp ? city : max);
-    const coldest = weatherData.reduce((min, city) => city.temp < min.temp ? city : min);
-    const windiest = weatherData.reduce((max, city) => city.windSpeed > max.windSpeed ? city : max);
-    const mostHumid = weatherData.reduce((max, city) => city.humidity > max.humidity ? city : max);
-    const biggestSwing = weatherData.reduce((max, city) => city.tempSwing > max.tempSwing ? city : max);
-    const mostRain = weatherData.reduce((max, city) => city.rainfall24h > max.rainfall24h ? city : max);
-    const lowestPressure = weatherData.reduce((min, city) => city.pressure < min.pressure ? city : min);
-
-    setExtremes({ hottest, coldest, windiest, mostHumid, biggestSwing, mostRain, lowestPressure });
-    setAllCities(weatherData);
-    setUsingRealData(isReal);
-    generateAlerts({ hottest, coldest, windiest, mostRain });
-    updateHistoricalRecords({ hottest, coldest, windiest });
-  };
-
-  const generateAlerts = (extremes) => {
+  const generateAlerts = useCallback((extremes) => {
     const newAlerts = [];
     
     if (extremes.hottest.temp > 45) {
@@ -198,9 +133,9 @@ const [communitySubmissions, setCommunitySubmissions] = useState([]);
         });
       });
     }
-  };
+  }, [notificationsEnabled]);
 
-  const updateHistoricalRecords = (extremes) => {
+  const updateHistoricalRecords = useCallback((extremes) => {
     setHistoricalRecords({
       hottestEver: { temp: Math.max(extremes.hottest.temp, 56.7), city: 'Death Valley', date: '1913-07-10' },
       coldestEver: { temp: Math.min(extremes.coldest.temp, -89.2), city: 'Vostok Station', date: '1983-07-21' },
@@ -209,29 +144,82 @@ const [communitySubmissions, setCommunitySubmissions] = useState([]);
       coldestThisMonth: extremes.coldest,
       windiestThisMonth: extremes.windiest,
     });
+  }, []);
+
+  // Fetch function
+  const fetchWeatherData = useCallback(async () => {
+    try {
+      const res = await fetch('/api/extremes');
+      if (!res.ok) throw new Error('Failed to fetch weather data');
+      const data = await res.json();
+      setExtremes(data.extremes);
+      setAllCities(data.allLocations || []);
+      setLoading(false);
+      setUsingRealData(true);
+      if (data.extremes) {
+        updateHistoricalRecords(data.extremes);
+        generateAlerts(data.extremes);
+      }
+    } catch (err) {
+      console.error('Error fetching weather:', err);
+    }
+  }, [generateAlerts, updateHistoricalRecords]);
+
+  // useEffect to handle animation and periodic fetch
+  useEffect(() => {
+    setAnimateIn(true);
+    fetchWeatherData();
+    const interval = setInterval(fetchWeatherData, 30 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [fetchWeatherData]);
+
+  const generateMockCityData = (city) => {
+    const temp = Math.random() * 70 - 30;
+    const tempYesterday = temp + (Math.random() * 20 - 10);
+    
+    return {
+      ...city,
+      temp,
+      tempYesterday,
+      tempSwing: Math.abs(temp - tempYesterday),
+      windSpeed: Math.random() * 35,
+      humidity: 30 + Math.random() * 70,
+      feelsLike: temp + (Math.random() * 10 - 5),
+      rainfall24h: Math.random() * 100,
+      pressure: 980 + Math.random() * 50,
+    };
   };
 
-  // import { useEffect, useCallback } from 'react'; // <-- removed, already imported at top
+  const processWeatherData = (weatherData, isReal) => {
+    const hottest = weatherData.reduce((max, city) => city.temp > max.temp ? city : max);
+    const coldest = weatherData.reduce((min, city) => city.temp < min.temp ? city : min);
+    const windiest = weatherData.reduce((max, city) => city.windSpeed > max.windSpeed ? city : max);
+    const mostHumid = weatherData.reduce((max, city) => city.humidity > max.humidity ? city : max);
+    const biggestSwing = weatherData.reduce((max, city) => city.tempSwing > max.tempSwing ? city : max);
+    const mostRain = weatherData.reduce((max, city) => city.rainfall24h > max.rainfall24h ? city : max);
+    const lowestPressure = weatherData.reduce((min, city) => city.pressure < min.pressure ? city : min);
 
-// (removed duplicate import: import { useState, useEffect, useCallback } from 'react';)
+    setExtremes({ hottest, coldest, windiest, mostHumid, biggestSwing, mostRain, lowestPressure });
+    setAllCities(weatherData);
+    setUsingRealData(isReal);
+    generateAlerts({ hottest, coldest, windiest, mostRain });
+    updateHistoricalRecords({ hottest, coldest, windiest });
+  };
 
-// Removed duplicate default export and Home component to resolve export error.
-
-
-useEffect(() => {
-  if (searchQuery.length > 0) {
-    const results = allCities
-      .filter(city =>
-        !city.isGridPoint &&
-        (city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         city.country.toLowerCase().includes(searchQuery.toLowerCase()))
-      )
-      .slice(0, 8);
-    setSearchResults(results);
-  } else {
-    setSearchResults([]);
-  }
-}, [searchQuery, allCities]); // ✅ this one is already correct
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      const results = allCities
+        .filter(city =>
+          !city.isGridPoint &&
+          (city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           city.country.toLowerCase().includes(searchQuery.toLowerCase()))
+        )
+        .slice(0, 8);
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery, allCities]);
 
 
   const toggleNotifications = () => {
