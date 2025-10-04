@@ -574,87 +574,87 @@ useEffect(() => {
                   </div>
                 )}
 
-                {/* Extremes Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <ExtremeCard
-                    extreme={extremes.coldest}
-                    type="coldest"
-                    icon={Snowflake}
-                    emoji="❄️"
-                    stat={extremes.coldest.temp}
-                    unit="°C"
-                    color="from-blue-600 to-cyan-600"
-                    vibeType="cold"
-                    onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.coldest, type: 'coldest', stat: extremes.coldest.temp, unit: '°C' })}
-                    darkMode={darkMode}
-                  />
-                  <ExtremeCard
-                    extreme={extremes.windiest}
-                    type="windiest"
-                    icon={Wind}
-                    emoji="💨"
-                    stat={extremes.windiest.windSpeed}
-                    unit=" m/s"
-                    color="from-teal-600 to-green-600"
-                    vibeType="wind"
-                    onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.windiest, type: 'windiest', stat: extremes.windiest.windSpeed, unit: ' m/s' })}
-                    darkMode={darkMode}
-                  />
-                  <ExtremeCard
-                    extreme={extremes.mostHumid}
-                    type="most humid"
-                    icon={Droplets}
-                    emoji="💧"
-                    stat={extremes.mostHumid.humidity}
-                    unit="%"
-                    color="from-indigo-600 to-purple-600"
-                    vibeType="humidity"
-                    onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.mostHumid, type: 'mostHumid', stat: extremes.mostHumid.humidity, unit: '%' })}
-                    darkMode={darkMode}
-                  />
-                  <ExtremeCard
-                    extreme={extremes.biggestSwing}
-                    type="biggest swing"
-                    icon={Zap}
-                    emoji="⚡"
-                    stat={extremes.biggestSwing.tempSwing}
-                    unit="°C/24h"
-                    color="from-yellow-600 to-orange-600"
-                    vibeType="swing"
-                    onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.biggestSwing, type: 'biggestSwing', stat: extremes.biggestSwing.tempSwing, unit: '°C' })}
-                    darkMode={darkMode}
-                  />
-                  <ExtremeCard
-                    extreme={extremes.rainiest}
-                    type="rainiest"
-                    icon={CloudRain}
-                    emoji="🌧️"
-                    stat={extremes.rainiest.rainfall24h}
-                    unit="mm"
-                    color="from-blue-500 to-indigo-600"
-                    vibeType="rain"
-                    onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.rainiest, type: 'rainiest', stat: extremes.rainiest.rainfall24h, unit: 'mm' })}
-                    darkMode={darkMode}
-                  />
-                  <ExtremeCard
-                    extreme={extremes.lowestPressure}
-                    type="lowest pressure"
-                    icon={Gauge}
-                    emoji="📉"
-                    stat={extremes.lowestPressure.pressure}
-                    unit=" hPa"
-                    color="from-gray-600 to-gray-500"
-                    vibeType={null}
-                    onShare={shareExtreme}
-                    onClick={() => setSelectedExtreme({ ...extremes.lowestPressure, type: 'lowestPressure', stat: extremes.lowestPressure.pressure, unit: ' hPa' })}
-                    darkMode={darkMode}
-                  />
-                </div>
+{/* Extremes Grid */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  <ExtremeCard
+    extreme={extremes.coldest}
+    type="coldest"
+    icon={Snowflake}
+    emoji="❄️"
+    stat={extremes.coldest.temp}
+    unit="°C"
+    color="from-blue-600 to-cyan-600"
+    vibeType="cold"
+    onShare={shareExtreme}
+    onClick={() => setSelectedExtreme({ ...extremes.coldest, type: 'coldest', stat: extremes.coldest.temp, unit: '°C' })}
+    darkMode={darkMode}
+  />
+  <ExtremeCard
+    extreme={extremes.windiest}
+    type="windiest"
+    icon={Wind}
+    emoji="💨"
+    stat={extremes.windiest.windSpeed}
+    unit=" m/s"
+    color="from-teal-600 to-green-600"
+    vibeType="wind"
+    onShare={shareExtreme}
+    onClick={() => setSelectedExtreme({ ...extremes.windiest, type: 'windiest', stat: extremes.windiest.windSpeed, unit: ' m/s' })}
+    darkMode={darkMode}
+  />
+  <ExtremeCard
+    extreme={extremes.mostHumid}
+    type="most humid"
+    icon={Droplets}
+    emoji="💧"
+    stat={extremes.mostHumid.humidity}
+    unit="%"
+    color="from-indigo-600 to-purple-600"
+    vibeType="humidity"
+    onShare={shareExtreme}
+    onClick={() => setSelectedExtreme({ ...extremes.mostHumid, type: 'mostHumid', stat: extremes.mostHumid.humidity, unit: '%' })}
+    darkMode={darkMode}
+  />
+  <ExtremeCard
+    extreme={extremes.biggestSwing}
+    type="biggest swing"
+    icon={Zap}
+    emoji="⚡"
+    stat={extremes.biggestSwing.tempSwing}
+    unit="°C/24h"
+    color="from-yellow-600 to-orange-600"
+    vibeType="swing"
+    onShare={shareExtreme}
+    onClick={() => setSelectedExtreme({ ...extremes.biggestSwing, type: 'biggestSwing', stat: extremes.biggestSwing.tempSwing, unit: '°C' })}
+    darkMode={darkMode}
+  />
+  <ExtremeCard
+    extreme={extremes.mostRain}
+    type="most rain"
+    icon={CloudRain}
+    emoji="🌧️"
+    stat={extremes.mostRain.rainfall24h}
+    unit="mm"
+    color="from-blue-500 to-indigo-600"
+    vibeType="rain"
+    onShare={shareExtreme}
+    onClick={() => setSelectedExtreme({ ...extremes.mostRain, type: 'mostRain', stat: extremes.mostRain.rainfall24h, unit: 'mm' })}
+    darkMode={darkMode}
+  />
+  <ExtremeCard
+    extreme={extremes.lowestPressure}
+    type="lowest pressure"
+    icon={Gauge}
+    emoji="📉"
+    stat={extremes.lowestPressure.pressure}
+    unit=" hPa"
+    color="from-gray-600 to-gray-500"
+    vibeType={null}
+    onShare={shareExtreme}
+    onClick={() => setSelectedExtreme({ ...extremes.lowestPressure, type: 'lowestPressure', stat: extremes.lowestPressure.pressure, unit: ' hPa' })}
+    darkMode={darkMode}
+  />
+</div>
 
                 {/* Community Challenge Section */}
                 <div className={`mt-8 rounded-3xl p-8 border transition-all ${
