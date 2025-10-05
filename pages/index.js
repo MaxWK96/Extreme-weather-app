@@ -1028,11 +1028,11 @@ const getThemedStyle = () => {
         <div className="text-5xl font-black mb-2 text-white drop-shadow-2xl">{Math.round(stat)}{unit}</div>
         <div className="text-lg font-bold text-white drop-shadow-md mb-1">{extreme.name}</div>
         <div className="text-sm text-white/80 drop-shadow-sm mb-3">{extreme.country}</div>
-        {vibeType && (
-          <div className="text-sm text-white/90 italic drop-shadow-md bg-black/20 rounded-lg px-3 py-2 backdrop-blur-sm">
-            &quot;{getVibeText(vibeType, stat)}&quot;
-          </div>
-        )}
+        {vibeType && stat > 0 && (
+  <div className="text-sm text-white/90 italic drop-shadow-md bg-black/20 rounded-lg px-3 py-2 backdrop-blur-sm">
+    &quot;{getVibeText(vibeType, stat)}&quot;
+  </div>
+)}
       </div>
     </div>
   );
