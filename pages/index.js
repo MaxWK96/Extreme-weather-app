@@ -72,11 +72,11 @@ const WeatherExtremesTracker = () => {
   const [compareCity, setCompareCity] = useState(null);
   const [animateIn, setAnimateIn] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-  const [submissionCount, setSubmissionCount] = useState(() => {
+const [submissionCount, setSubmissionCount] = useState(() => {
   if (typeof window !== 'undefined') {
-    return parseInt(localStorage.getItem('submissionCount') || '47');
+    return parseInt(localStorage.getItem('submissionCount') || '8');
   }
-  return 47;
+  return 8;
 });
   const [communitySubmissions, setCommunitySubmissions] = useState([]);
 
