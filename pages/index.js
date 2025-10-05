@@ -9,7 +9,7 @@ const TRACKING_CONFIG = {
   api_key: 'YOUR_API_KEY_HERE'
 };
 
-const CITIES = [
+const SEED_CITIES = [
   // Extreme Heat
   { name: 'Death Valley', lat: 36.5323, lon: -116.9325, country: 'USA' },
   { name: 'Dallol', lat: 14.2417, lon: 40.2833, country: 'Ethiopia' },
