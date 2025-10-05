@@ -4,26 +4,31 @@ const path = require('path');
 const API_KEY = process.env.WEATHER_API_KEY;
 
 const CITIES = [
-  { name: 'Tokyo', lat: 35.6762, lon: 139.6503, country: 'Japan' },
-  { name: 'Delhi', lat: 28.7041, lon: 77.1025, country: 'India' },
-  { name: 'Shanghai', lat: 31.2304, lon: 121.4737, country: 'China' },
-  { name: 'São Paulo', lat: -23.5505, lon: -46.6333, country: 'Brazil' },
-  { name: 'Mexico City', lat: 19.4326, lon: -99.1332, country: 'Mexico' },
-  { name: 'Cairo', lat: 30.0444, lon: 31.2357, country: 'Egypt' },
-  { name: 'Mumbai', lat: 19.0760, lon: 72.8777, country: 'India' },
-  { name: 'Beijing', lat: 39.9042, lon: 116.4074, country: 'China' },
-  { name: 'New York', lat: 40.7128, lon: -74.0060, country: 'USA' },
-  { name: 'Los Angeles', lat: 34.0522, lon: -118.2437, country: 'USA' },
-  { name: 'Moscow', lat: 55.7558, lon: 37.6173, country: 'Russia' },
-  { name: 'Paris', lat: 48.8566, lon: 2.3522, country: 'France' },
-  { name: 'London', lat: 51.5074, lon: -0.1278, country: 'UK' },
-  { name: 'Bangkok', lat: 13.7563, lon: 100.5018, country: 'Thailand' },
-  { name: 'Dubai', lat: 25.2048, lon: 55.2708, country: 'UAE' },
-  { name: 'Singapore', lat: 1.3521, lon: 103.8198, country: 'Singapore' },
-  { name: 'Sydney', lat: -33.8688, lon: 151.2093, country: 'Australia' },
-  { name: 'Toronto', lat: 43.6532, lon: -79.3832, country: 'Canada' },
-  { name: 'Reykjavik', lat: 64.1466, lon: -21.9426, country: 'Iceland' },
+  // Extreme Heat
+  { name: 'Death Valley', lat: 36.5323, lon: -116.9325, country: 'USA' },
+  { name: 'Dallol', lat: 14.2417, lon: 40.2833, country: 'Ethiopia' },
+  { name: 'Kuwait City', lat: 29.3759, lon: 47.9774, country: 'Kuwait' },
+  { name: 'Ahvaz', lat: 31.3183, lon: 48.6706, country: 'Iran' },
+  { name: 'Aswan', lat: 24.0889, lon: 32.8998, country: 'Egypt' },
+  { name: 'Luxor', lat: 25.6872, lon: 32.6396, country: 'Egypt' },
+  
+  // Extreme Cold
+  { name: 'Vostok Station', lat: -78.4645, lon: 106.8374, country: 'Antarctica' },
+  { name: 'Oymyakon', lat: 63.4608, lon: 142.7858, country: 'Russia' },
+  { name: 'Verkhoyansk', lat: 67.5447, lon: 133.3850, country: 'Russia' },
   { name: 'Yakutsk', lat: 62.0355, lon: 129.6755, country: 'Russia' },
+  { name: 'Eureka', lat: 79.9833, lon: -85.9333, country: 'Canada' },
+  
+  // Extreme Wind/Precipitation/Other
+  { name: 'Mount Washington', lat: 44.2706, lon: -71.3033, country: 'USA' },
+  { name: 'Commonwealth Bay', lat: -67.0000, lon: 142.6667, country: 'Antarctica' },
+  { name: 'Mawsynram', lat: 25.2977, lon: 91.5819, country: 'India' },
+  { name: 'Cherrapunji', lat: 25.2677, lon: 91.7322, country: 'India' },
+  { name: 'Atacama Desert', lat: -23.8501, lon: -69.2483, country: 'Chile' },
+  { name: 'Arica', lat: -18.4783, lon: -70.3126, country: 'Chile' },
+  { name: 'La Rinconada', lat: -14.6333, lon: -69.4500, country: 'Peru' },
+  { name: 'Barrow', lat: 71.2906, lon: -156.7886, country: 'USA' },
+  { name: 'Singapore', lat: 1.3521, lon: 103.8198, country: 'Singapore' },
 ];
 
 async function fetchWeather(city) {
