@@ -623,11 +623,11 @@ const [submissionCount, setSubmissionCount] = useState(() => {
   />
   <ExtremeCard
     extreme={extremes.mostRain}
-    type="most rain"
+    type="heaviest rain"
     icon={CloudRain}
     emoji="🌧️"
     stat={extremes.mostRain.rainfall24h}
-    unit="mm"
+    unit="mm/h"
     color="from-blue-500 to-indigo-600"
     vibeType="rain"
     onShare={shareExtreme}

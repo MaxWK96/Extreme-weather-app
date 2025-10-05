@@ -46,14 +46,13 @@ async function fetchWeather(city) {
     // More realistic tempSwing - daily variation is usually 5-15°C
     const tempSwing = Math.abs(data.main.temp_max - data.main.temp_min) || (Math.random() * 10 + 3);
     
-    // Conservative rainfall estimate - only use API data if available
-    let rainfall24h = 0;
-    if (data.rain?.['1h']) {
-      rainfall24h = data.rain['1h'] * 24;
-    } else if (data.rain?.['3h']) {
-      rainfall24h = (data.rain['3h'] / 3) * 24;
-    }
-    // If no rain data, leave it at 0 - don't simulate unrealistic amounts
+// Only use current rain rate, not 24h estimate
+let rainfall24h = 0;
+if (data.rain?.['1h']) {
+  rainfall24h = data.rain['1h'];  // Remove the * 24
+} else if (data.rain?.['3h']) {
+  rainfall24h = data.rain['3h'] / 3;  // Remove the * 24
+}
     
     return {
       ...city,
